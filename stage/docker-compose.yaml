@@ -1,0 +1,17 @@
+version: "3"
+
+services: 
+  valheim-stage: 
+    image: lloesche/valheim-server
+    cap_add:
+      - sys_nice
+    volumes: 
+      - ./config-stage:/config
+      - ./data-stage:/opt/valheim
+    ports: 
+      - "3456-3458:3456-3458/udp"
+      - "9101:9101/tcp"
+    env_file:
+      - ./.valheim-stage.env
+    restart: always
+    stop_grace_period: 2m
