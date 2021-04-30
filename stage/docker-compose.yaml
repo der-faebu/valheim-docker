@@ -1,0 +1,28 @@
+version: "3"
+
+services: 
+
+  discord-bot:
+    image: docker.pkg.github.com/eliasase/valheim-discord-bot/valheim-discord-bot:0.1
+    ports: 
+      - "514:514/udp"
+      - "514:514/tcp"
+    env_file:
+      - ./.valheim-stage.env
+    restart: always
+    stop_grace_period: 2m  
+
+  valheim-stage: 
+    image: lloesche/valheim-server
+    cap_add:
+      - sys_nice
+    volumes: 
+      - ./config-stage:/config
+      - ./data-stage:/opt/valheim
+    ports: 
+      - "3456-3458:3456-3458/udp"
+      - "9101:9101/tcp"
+    env_file:
+      - ./.valheim-stage.env
+    restart: always
+    stop_grace_period: 2m
