@@ -18,7 +18,6 @@ services:
     depends_on: 
       - valheim-bot-live
 
-
   valheim-bot-live:
     image: docker.pkg.github.com/eliasase/valheim-discord-bot/valheim-discord-bot:0.1
     ports: 
@@ -26,5 +25,9 @@ services:
       - "514:514/tcp"
     env_file:
       - ./.valheim-live.env
+    environment: 
+      - DISCORD__TOKEN=${DISCORD__TOKEN}
+      - DISCORD__LOGCHANNEL=valheim
+  
     restart: always
     stop_grace_period: 2m  
